@@ -8,7 +8,7 @@ const Products = () => {
     const [activeTab,setActiveTab]=useState('All');
     const renderCards = ProductList.map(product=>{
         return(
-            <Cards />
+            <Cards image={product.image} name={product.name} price={product.price}/>
         )
     })
   return (
@@ -26,7 +26,7 @@ const Products = () => {
                 )
             })}
         </div>
-        <div> {renderCards}</div>
+        <div className='grid grid-cols-4 gap-9 mt-10'> {renderCards}</div>
     </div>
     </section>
   )

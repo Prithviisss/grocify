@@ -4,6 +4,7 @@ import Hero from '../Hero/Hero'
 import Category from '../Category/Category'
 import Values from '../Values/Values'
 import Products from '../Products/Products'
+import Discount from '../Discount/Discount'
 
 export const Home = () => {
   return (
@@ -12,6 +13,7 @@ export const Home = () => {
     <Category />
     <Values />
     <Products />
+    <Discount />
     </div>
 
   )

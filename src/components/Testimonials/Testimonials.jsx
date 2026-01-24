@@ -5,7 +5,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 
 import Heading from '../Heading/Heading'
-import { FaAngleRight } from "react-icons/fa"
+import { FaAngleRight, FaStar } from "react-icons/fa"
 import { FaAngleLeft } from "react-icons/fa"
 
 import Customer1 from '../../assets/customer1.jpg'
@@ -16,7 +16,7 @@ import Customer5 from '../../assets/customer5.jpg'
 
 const Testimonials = () => {
   return (
-    <section>
+    <section >
       <div className='max-w-[1400px] px-10 mx-auto'>
         <Heading highlight="Customers  " heading="Saying" />
       </div>
@@ -36,22 +36,35 @@ const Testimonials = () => {
         prevEl:".custom-prev"
 
       }} 
-      loop={true} modules={[Navigation]} className="mySwiper">
+      loop={true}  breakpoints={{
+        640:{slidesPerView:1, spaceBetween:20},
+         768:{slidesPerView:2, spaceBetween:20},
+          1024:{slidesPerView:3, spaceBetween:20},
+       
+      }} 
+       modules={[Navigation]} className="mySwiper">
         {
           review.map(item => {
             return (
               <SwiperSlide key={item.id} className='bg-zinc-100 rounded-xl p-8'>
                 <div className='flex gap-5 items-center'>
-                  <div className='w-16 h-16 rounded-full bg-red-500 outline outline-2 outline-offset-4'></div>
+                  <div className='w-16 h-16 rounded-full bg-red-500 outline outline-2 outline-offset-4 overflow-hidden '>
+                    <img src={item.image} className='w-full h-full' />
+                  </div>
 
                   <div>
                     <h5 className='text-xl font-bold'>{item.name}</h5>
                     <p className='text-zinc-600'>{item.profession}</p>
-                    <span>{item.star}</span>
+                    <span className='flex text-yellow-400 mt-3 text-xl gap-1 '>
+                      {Array.from({length:item.rating},(_,index)=>(
+                        <FaStar />
+
+                      ))}
+                    </span>
                   </div>
                 </div>
 
-                <div className='mt-10'>
+                <div className='mt-10 min-h-[15vh]'>
                   <p>
                     {item.para}
                   </p>

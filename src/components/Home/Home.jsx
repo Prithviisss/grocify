@@ -18,7 +18,9 @@ export const Home = () => {
     <Products />
     <Discount />
     <Process />
-    <Testimonials />
+    <div className="mb-16">
+    <Testimonials  />
+    </div>
     <Footer />
     </div>
 

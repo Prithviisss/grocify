@@ -11,7 +11,7 @@ import Footer from '../Footer/Footer'
 
 export const Home = () => {
   return (
-    <div><Navbar />
+    <div>
     <Hero />
     <Category />
     <Values />
@@ -21,7 +21,7 @@ export const Home = () => {
     <div className="mb-16">
     <Testimonials  />
     </div>
-    <Footer />
+    
     </div>
 
   )

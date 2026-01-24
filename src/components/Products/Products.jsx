@@ -3,7 +3,8 @@ import Heading from '../Heading/Heading'
 import ProductList from '../ProductList/ProductList.js'
 import Cards from '../Cards/Cards'
 import Button from '../Button/Button.jsx'
-
+import {Link} from 'react-router-dom'
+  
 const Products = () => {
     const categories=['All','Fruits','Vegetables','Dairy','SeaFood']
     const [activeTab,setActiveTab]=useState('All');
@@ -31,7 +32,8 @@ const Products = () => {
         </div>
         <div className='grid grid-cols-1 md:grid-cols-4 gap-9 mt-20'> {renderCards}</div>
     </div>
-    <div className='mt-15 mx-auto w-fit'><Button content="View All" /></div>
+    <div className='mt-15 mx-auto w-fit'> <Link to="/allproducts"  className='bg-gradient-to-b from-orange-400 to-orange-500 text-white px-8 py-3 rounded-lg md:text-lg  text-md hover:scale-105 hover:to-orange-600  transistion-all duration-300
+   duration-300 cursor-pointer'>View All</Link></div>
     </section>
   )
 }

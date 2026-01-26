@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { HiShoppingBag } from "react-icons/hi2";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useWishlist } from "../../context/WishlistContext";
 
 const Navbar = () => {
@@ -11,6 +11,11 @@ const Navbar = () => {
 
     // ✅ wishlist from context
     const { wishlist } = useWishlist();
+
+    // ✅ search state
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const navigate = useNavigate();
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
@@ -39,24 +44,16 @@ const Navbar = () => {
                 {/* Desktop Menu */}
                 <ul className="md:flex items-center gap-x-15 hidden">
                     <li>
-                        <a className="font-semibold tracking-wider text-orange-500">
-                            Home
-                        </a>
+                        <a className="font-semibold tracking-wider text-orange-500">Home</a>
                     </li>
                     <li>
-                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">
-                            About Us
-                        </a>
+                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">About Us</a>
                     </li>
                     <li>
-                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">
-                            Process
-                        </a>
+                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">Process</a>
                     </li>
                     <li>
-                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">
-                            Contact Us
-                        </a>
+                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">Contact Us</a>
                     </li>
                 </ul>
 
@@ -67,9 +64,14 @@ const Navbar = () => {
                         <input
                             type="text"
                             placeholder="Search..."
+                            value={searchTerm} // ✅ bind state
+                            onChange={(e) => setSearchTerm(e.target.value)} // ✅ update state
                             className="flex-1 h-[5vh] px-3 focus:outline-none"
                         />
-                        <button className="bg-gradient-to-b from-orange-400 to-orange-500 text-white w-10 h-10 flex justify-center items-center rounded-full text-xl">
+                        <button
+                            onClick={() => navigate(`/allproducts?search=${searchTerm}`)} // ✅ navigate with query
+                            className="bg-gradient-to-b from-orange-400 to-orange-500 text-white w-10 h-10 flex justify-center items-center rounded-full text-xl"
+                        >
                             <FaSearch />
                         </button>
                     </div>
@@ -77,7 +79,6 @@ const Navbar = () => {
                     {/* ❤️ Wishlist with Count */}
                     <Link to="/wishlist" className="relative text-zinc-800 text-2xl">
                         <FaHeart />
-
                         {wishlist.length > 0 && (
                             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
                                 {wishlist.length}
@@ -114,9 +115,14 @@ const Navbar = () => {
                         <input
                             type="text"
                             placeholder="Search..."
+                            value={searchTerm} // ✅ bind state
+                            onChange={(e) => setSearchTerm(e.target.value)} // ✅ update state
                             className="flex-1 h-[5vh] px-3 focus:outline-none"
                         />
-                        <button className="bg-gradient-to-b from-orange-400 to-orange-500 text-white w-10 h-10 flex justify-center items-center rounded-full text-xl">
+                        <button
+                            onClick={() => navigate(`/allproducts?search=${searchTerm}`)} // ✅ navigate
+                            className="bg-gradient-to-b from-orange-400 to-orange-500 text-white w-10 h-10 flex justify-center items-center rounded-full text-xl"
+                        >
                             <FaSearch />
                         </button>
                     </li>

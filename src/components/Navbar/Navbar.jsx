@@ -3,6 +3,7 @@ import {GoHeartFill} from "react-icons/go";
 import { HiShoppingBag } from "react-icons/hi2";
 import { FaSearch } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
+import {Link} from 'react-router-dom'
 const Navbar=()=>{
     const[showMenu,setShowMenu]=useState(false);
     const[isScrolled,setIsScrolled]=useState(false);
@@ -19,9 +20,9 @@ return()=> window.removeEventListener('scroll',handleScroll)
     return(
         <header className={`bg-white fixed top-0 right-0 left-0 z-50 ${isScrolled ?'drop-shadow-[0_4px_25px_rgba(0,0,0,.1)]':''}`}>
             <nav className='max-w-[1400px] mx-auto px-10  md:h-[14vh] h-[12vh] flex justify-between items-center '>
-                <a href="#" className='text-3xl font-bold'>
+                <Link to="/" className='text-3xl font-bold'>
                     Gr<span className='text-orange-500 uppercase'>o</span>cify
-                </a>
+                </Link>
                 <ul className=' md:flex items-center gap-x-15 hidden'> 
                     <li>
                         <a href="#" className='font-semibold tracking-wider text-orange-500'>Home</a>

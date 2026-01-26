@@ -4,27 +4,22 @@ import { FaSearch, FaHeart } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { useWishlist } from "../../context/WishlistContext";
+import { useCart } from "../../context/CartContext";
 
 const Navbar = () => {
+    const { wishlist } = useWishlist();
+    const { cart } = useCart();
+
     const [showMenu, setShowMenu] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-
-    // ✅ wishlist from context
-    const { wishlist } = useWishlist();
-
-    // ✅ search state
     const [searchTerm, setSearchTerm] = useState("");
 
     const navigate = useNavigate();
 
-    const toggleMenu = () => {
-        setShowMenu(!showMenu);
-    };
+    const toggleMenu = () => setShowMenu(!showMenu);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
-        };
+        const handleScroll = () => setIsScrolled(window.scrollY > 10);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -36,6 +31,7 @@ const Navbar = () => {
             }`}
         >
             <nav className="max-w-[1400px] mx-auto px-10 md:h-[14vh] h-[12vh] flex justify-between items-center">
+                
                 {/* Logo */}
                 <Link to="/" className="text-3xl font-bold">
                     Gr<span className="text-orange-500 uppercase">o</span>cify
@@ -43,40 +39,33 @@ const Navbar = () => {
 
                 {/* Desktop Menu */}
                 <ul className="md:flex items-center gap-x-15 hidden">
-                    <li>
-                        <a className="font-semibold tracking-wider text-orange-500">Home</a>
-                    </li>
-                    <li>
-                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">About Us</a>
-                    </li>
-                    <li>
-                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">Process</a>
-                    </li>
-                    <li>
-                        <a className="font-semibold tracking-wider text-zinc-800 hover:text-orange-500">Contact Us</a>
-                    </li>
+                    <li className="font-semibold text-orange-500">Home</li>
+                    <li className="font-semibold text-zinc-800 hover:text-orange-500">About Us</li>
+                    <li className="font-semibold text-zinc-800 hover:text-orange-500">Process</li>
+                    <li className="font-semibold text-zinc-800 hover:text-orange-500">Contact Us</li>
                 </ul>
 
                 {/* Right Icons */}
                 <div className="flex items-center gap-x-5">
+
                     {/* Search */}
                     <div className="md:flex p-1 border-2 border-orange-500 rounded-full hidden">
                         <input
                             type="text"
                             placeholder="Search..."
-                            value={searchTerm} // ✅ bind state
-                            onChange={(e) => setSearchTerm(e.target.value)} // ✅ update state
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             className="flex-1 h-[5vh] px-3 focus:outline-none"
                         />
                         <button
-                            onClick={() => navigate(`/allproducts?search=${searchTerm}`)} // ✅ navigate with query
+                            onClick={() => navigate(`/allproducts?search=${searchTerm}`)}
                             className="bg-gradient-to-b from-orange-400 to-orange-500 text-white w-10 h-10 flex justify-center items-center rounded-full text-xl"
                         >
                             <FaSearch />
                         </button>
                     </div>
 
-                    {/* ❤️ Wishlist with Count */}
+                    {/* ❤️ Wishlist */}
                     <Link to="/wishlist" className="relative text-zinc-800 text-2xl">
                         <FaHeart />
                         {wishlist.length > 0 && (
@@ -87,11 +76,16 @@ const Navbar = () => {
                     </Link>
 
                     {/* 🛒 Cart */}
-                    <Link className="text-zinc-800 text-2xl">
+                    <Link to="/cart" className="relative text-zinc-800 text-2xl">
                         <HiShoppingBag />
+                        {cart.length > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
+                                {cart.length}
+                            </span>
+                        )}
                     </Link>
 
-                    {/* Mobile Menu Icon */}
+                    {/* Mobile Menu */}
                     <button
                         className="text-zinc-800 text-3xl md:hidden"
                         onClick={toggleMenu}
@@ -102,8 +96,8 @@ const Navbar = () => {
 
                 {/* Mobile Menu */}
                 <ul
-                    className={`flex flex-col gap-y-12 bg-orange-500/15 backdrop-blur-xl shadow-xl rounded-lg p-10 items-center md:hidden absolute top-30 -left-full transition-all duration-500 ${
-                        showMenu ? "left-1/2 -translate-x-1/2" : ""
+                    className={`flex flex-col gap-y-12 bg-orange-500/15 backdrop-blur-xl shadow-xl rounded-lg p-10 items-center md:hidden absolute top-30 transition-all duration-500 ${
+                        showMenu ? "left-1/2 -translate-x-1/2" : "-left-full"
                     }`}
                 >
                     <li>Home</li>
@@ -111,16 +105,16 @@ const Navbar = () => {
                     <li>Process</li>
                     <li>Contact Us</li>
 
-                    <li className="flex p-1 border-2 border-orange-500 rounded-full md:hidden">
+                    <li className="flex p-1 border-2 border-orange-500 rounded-full">
                         <input
                             type="text"
                             placeholder="Search..."
-                            value={searchTerm} // ✅ bind state
-                            onChange={(e) => setSearchTerm(e.target.value)} // ✅ update state
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             className="flex-1 h-[5vh] px-3 focus:outline-none"
                         />
                         <button
-                            onClick={() => navigate(`/allproducts?search=${searchTerm}`)} // ✅ navigate
+                            onClick={() => navigate(`/allproducts?search=${searchTerm}`)}
                             className="bg-gradient-to-b from-orange-400 to-orange-500 text-white w-10 h-10 flex justify-center items-center rounded-full text-xl"
                         >
                             <FaSearch />
@@ -133,3 +127,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

@@ -2,8 +2,12 @@ import React from 'react'
 import { FaPlus, FaHeart } from 'react-icons/fa'
 import Button from '../Button/Button'
 import { useWishlist } from '../../context/WishlistContext'
+import { useCart } from "../../context/CartContext";
+
 
 const Cards = ({ product }) => {
+  const { addToCart } = useCart();
+
   const { wishlist, toggleWishlist } = useWishlist()
 
   if (!product) return null
@@ -26,7 +30,7 @@ const Cards = ({ product }) => {
         </span>
 
         {/* Add button */}
-        <button className='bg-gradient-to-b from-orange-400 to-orange-500 text-white text-xl px-4 py-3 rounded-lg'>
+        <button   onClick={() => addToCart(product)} className='bg-gradient-to-b from-orange-400 to-orange-500 text-white text-xl px-4 py-3 rounded-lg'>
           <FaPlus />
         </button>
       </div>
@@ -44,7 +48,7 @@ const Cards = ({ product }) => {
         <p className='text-2xl font-bold mt-4 mb-3'>
           ${product.price?.toFixed(2) ?? '0.00'}
         </p>
-        <Button content='Shop Now' />
+        <Button content='Buy Now' />
       </div>
     </div>
   )

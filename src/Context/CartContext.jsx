@@ -1,31 +1,52 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
-// 1️⃣ Create context
 const CartContext = createContext();
 
-// 2️⃣ Export custom hook
-export const useCart = () => useContext(CartContext);
-
-// 3️⃣ Provider component
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]); // stores cart items
+  const [cart, setCart] = useState([]);
 
-  // Add product to cart
+  // ➕ Add to cart
   const addToCart = (product) => {
-    // avoid duplicates
-    if (!cart.find((item) => item.id === product.id)) {
-      setCart([...cart, product]);
-    }
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+
+      return [...prev, { ...product, quantity: 1 }];
+    });
   };
 
-  // Remove product from cart
-  const removeFromCart = (productId) => {
-    setCart(cart.filter((item) => item.id !== productId));
+  // ➖ Decrease quantity
+  const decreaseQty = (id) => {
+    setCart((prev) =>
+      prev
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  // ❌ Remove item
+  const removeFromCart = (id) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, decreaseQty, removeFromCart }}
+    >
       {children}
     </CartContext.Provider>
   );
 };
+
+export const useCart = () => useContext(CartContext);

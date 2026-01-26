@@ -7,6 +7,8 @@ import SeaFood from './components/SeaFood/SeaFood'
 import AllProducts from './components/AllProducts/AllProducts'
 import Layout from './components/Layout/Layout'
 import Wishlist from './pages//Wishlist'
+import Cart from "./Pages/Cart";
+
 
 const App = () => {
   const router = createBrowserRouter([
@@ -34,8 +36,15 @@ const App = () => {
           path: 'allproducts',
           element: <AllProducts />
         },
-      { path: 'wishlist', 
-        element: <Wishlist /> }, 
+        {
+          path: 'wishlist',
+          element: <Wishlist />
+        },
+        {
+          path: "/cart",
+          element: <Cart />
+        }
+
       ],
     },
   ])

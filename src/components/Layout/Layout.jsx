@@ -1,17 +1,15 @@
-import React from 'react'
-import Navbar from '../Navbar/Navbar'
-import { Outlet } from 'react-router-dom'
-import Footer from '../Footer/Footer'
-
+import Navbar from "../Navbar/Navbar";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div>
-        <Navbar />
-    <Outlet />
-    <Footer />
-    </div>
-  )
-}
+    <>
+      <Navbar />
+      <div style={{ marginTop: "150px" }}>
+        <Outlet />
+      </div>
+    </>
+  );
+};
 
-export default Layout
+export default Layout;

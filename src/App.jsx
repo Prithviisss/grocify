@@ -6,7 +6,7 @@ import Dairy from './components/Dairy/Dairy'
 import SeaFood from './components/SeaFood/SeaFood'
 import AllProducts from './components/AllProducts/AllProducts'
 import Layout from './components/Layout/Layout'
-
+import Wishlist from './pages//Wishlist'
 
 const App = () => {
   const router = createBrowserRouter([
@@ -15,26 +15,27 @@ const App = () => {
       element: <Layout />,
       children: [
         {
-          path: '/',
+          index: true,
           element: <Home />
         },
         {
-          path: '/fruits',
+          path: 'fruits',
           element: <Fruits />
         },
         {
-          path: '/dairy',
+          path: 'dairy',
           element: <Dairy />
         },
         {
-          path: '/seafood',
+          path: 'seafood',
           element: <SeaFood />
         },
         {
-          path: '/allproducts',
+          path: 'allproducts',
           element: <AllProducts />
         },
-       
+      { path: 'wishlist', 
+        element: <Wishlist /> }, 
       ],
     },
   ])
@@ -43,4 +44,3 @@ const App = () => {
 }
 
 export default App
-

@@ -8,7 +8,9 @@ import AllProducts from './components/AllProducts/AllProducts'
 import Layout from './components/Layout/Layout'
 import Wishlist from './pages//Wishlist'
 import Cart from "./Pages/Cart";
-
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Process from "./pages/Process";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -43,7 +45,21 @@ const App = () => {
         {
           path: "/cart",
           element: <Cart />
+        },
+        {
+          path: "/about",
+          element: <About />
+        },
+        {
+          path: "/contact",
+          element: <Contact />
+        },
+        {
+          path: "/process",
+          element: <Process />
         }
+
+
 
       ],
     },

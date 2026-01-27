@@ -9,7 +9,6 @@ import { useCart } from "../../context/CartContext";
 const Navbar = () => {
     const { wishlist } = useWishlist();
     const { cart } = useCart();
-
     const [showMenu, setShowMenu] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -26,12 +25,11 @@ const Navbar = () => {
 
     return (
         <header
-            className={`bg-white fixed top-0 right-0 left-0 z-50 ${
-                isScrolled ? "drop-shadow-[0_4px_25px_rgba(0,0,0,.1)]" : ""
-            }`}
+            className={`bg-white fixed top-0 right-0 left-0 z-50 ${isScrolled ? "drop-shadow-[0_4px_25px_rgba(0,0,0,.1)]" : ""
+                }`}
         >
             <nav className="max-w-[1400px] mx-auto px-10 md:h-[14vh] h-[12vh] flex justify-between items-center">
-                
+
                 {/* Logo */}
                 <Link to="/" className="text-3xl font-bold">
                     Gr<span className="text-orange-500 uppercase">o</span>cify
@@ -39,10 +37,38 @@ const Navbar = () => {
 
                 {/* Desktop Menu */}
                 <ul className="md:flex items-center gap-x-15 hidden">
-                    <li className="font-semibold text-orange-500">Home</li>
-                    <li className="font-semibold text-zinc-800 hover:text-orange-500">About Us</li>
-                    <li className="font-semibold text-zinc-800 hover:text-orange-500">Process</li>
-                    <li className="font-semibold text-zinc-800 hover:text-orange-500">Contact Us</li>
+                    <li>
+                        <Link to="/" className="font-semibold text-orange-500 cursor-pointer">
+                            Home
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/about"
+                            className="font-semibold text-zinc-800 hover:text-orange-500 cursor-pointer"
+                        >
+                            About Us
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/process"
+                            className="font-semibold text-zinc-800 hover:text-orange-500 cursor-pointer"
+                        >
+                            Process
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/contact"
+                            className="font-semibold text-zinc-800 hover:text-orange-500 cursor-pointer"
+                        >
+                            Contact Us
+                        </Link>
+                    </li>
                 </ul>
 
                 {/* Right Icons */}
@@ -96,14 +122,46 @@ const Navbar = () => {
 
                 {/* Mobile Menu */}
                 <ul
-                    className={`flex flex-col gap-y-12 bg-orange-500/15 backdrop-blur-xl shadow-xl rounded-lg p-10 items-center md:hidden absolute top-30 transition-all duration-500 ${
-                        showMenu ? "left-1/2 -translate-x-1/2" : "-left-full"
-                    }`}
+                    className={`flex flex-col gap-y-12 bg-orange-500/15 backdrop-blur-xl shadow-xl rounded-lg p-10 items-center md:hidden absolute top-30 transition-all duration-500 ${showMenu ? "left-1/2 -translate-x-1/2" : "-left-full"
+                        }`}
                 >
-                    <li>Home</li>
-                    <li>About Us</li>
-                    <li>Process</li>
-                    <li>Contact Us</li>
+                    <li>
+                        <Link
+                            to="/"
+                            onClick={() => setShowMenu(false)}
+                            className="font-semibold text-zinc-800 hover:text-orange-500 cursor-pointer"
+                        >
+                            Home
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/about"
+                            onClick={() => setShowMenu(false)}
+                            className="font-semibold text-zinc-800 hover:text-orange-500 cursor-pointer"
+                        >
+                            About Us
+                        </Link>
+                    </li>
+
+                    
+                        <li onClick={() => setShowMenu(false)}>
+                            <Link to="/process">Process</Link>
+                        </li>
+
+                    
+
+                    <li>
+                        <Link
+                            to="/contact"
+                            onClick={() => setShowMenu(false)}
+                            className="font-semibold text-zinc-800 hover:text-orange-500 cursor-pointer"
+                        >
+                            Contact Us
+                        </Link>
+                    </li>
+
 
                     <li className="flex p-1 border-2 border-orange-500 rounded-full">
                         <input

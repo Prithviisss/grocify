@@ -1,59 +1,84 @@
-import React from 'react'
-import { FaPlus, FaHeart } from 'react-icons/fa'
-import Button from '../Button/Button'
-import { useWishlist } from '../../context/WishlistContext'
+import React from "react";
+import { FaHeart, FaRegHeart, FaPlus } from "react-icons/fa";
+import { useWishlist } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext";
 
-
 const Cards = ({ product }) => {
-  const { addToCart } = useCart();
+  if (!product) return null;
 
-  const { wishlist, toggleWishlist } = useWishlist()
+  const { wishlist, setWishlist } = useWishlist();
+  const { cart, setCart } = useCart();
 
-  if (!product) return null
+  const isWishlisted = wishlist.some(item => item.id === product.id);
 
-  // ✅ Safe check for missing id
-  const productId = product.id ?? product.name  // fallback to name if id missing
-  const isWishlisted = wishlist.some(item => item.id === productId)
+  // ❤️ Toggle Wishlist
+  const toggleWishlist = () => {
+    if (isWishlisted) {
+      setWishlist(wishlist.filter(item => item.id !== product.id));
+    } else {
+      setWishlist([...wishlist, product]);
+    }
+  };
+
+  // 🛒 Add to Cart
+  const addToCart = () => {
+    const exists = cart.find(item => item.id === product.id);
+
+    if (exists) {
+      setCart(
+        cart.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+  };
 
   return (
-    <div className='bg-zinc-100 p-5 rounded-xl'>
-      <div className='flex justify-between'>
-        {/* Heart icon with toggle */}
-        <span
-          className={`text-3xl cursor-pointer ${
-            isWishlisted ? 'text-red-500' : 'text-zinc-300'
-          }`}
-          onClick={() => toggleWishlist(product)}
-        >
-          <FaHeart />
-        </span>
+    <div className="bg-zinc-100 p-5 rounded-xl relative">
 
-        {/* Add button */}
-        <button   onClick={() => addToCart(product)} className='bg-gradient-to-b from-orange-400 to-orange-500 text-white text-xl px-4 py-3 rounded-lg'>
-          <FaPlus />
-        </button>
-      </div>
+      {/* ❤️ Wishlist Icon */}
+      <button
+        onClick={toggleWishlist}
+        className="absolute top-4 left-4 text-2xl cursor-pointer"
+      >
+        {isWishlisted ? (
+          <FaHeart className="text-red-500" />
+        ) : (
+          <FaRegHeart className="text-zinc-400 hover:text-red-400" />
+        )}
+      </button>
 
-      <div className='w-full h-50'>
+      {/* ➕ Add to Cart */}
+      <button
+        onClick={addToCart}
+        className="absolute top-4 right-4 bg-gradient-to-b from-orange-400 to-orange-500 text-white p-3 rounded-lg cursor-pointer"
+      >
+        <FaPlus />
+      </button>
+
+      {/* Product Image */}
+      <div className="w-full h-40 flex items-center justify-center">
         <img
           src={product.image}
           alt={product.name}
-          className='w-full h-full mx-auto object-contain'
+          className="h-full object-contain"
         />
       </div>
 
-      <div className='text-center'>
-        <h3 className='text-2xl font-semibold'>{product.name}</h3>
-        <p className='text-2xl font-bold mt-4 mb-3'>
-          ${product.price?.toFixed(2) ?? '0.00'}
-        </p>
-        <Button content='Buy Now' />
+      {/* Product Info */}
+      <div className="text-center mt-4">
+        <h3 className="text-xl font-semibold">{product.name}</h3>
+        <p className="text-2xl font-bold mt-2">${product.price.toFixed(2)}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Cards
+export default Cards;
+
 
 
